@@ -4,13 +4,14 @@
 
 ## Бизнес-задача
 
-Расчёт и визуализация ключевых показателей эффективности (KPI) предприятия.
+Расчёт и визуализация ключевых показателей эффективности (KPI) предприятия: выручки, рентабельности и динамики показателей по месяцам.
 
-## Стек
+## Используемые технологии
 
 - Python 3.12+
 - pandas
 - matplotlib
+- Git и GitHub (ветки, Pull Request)
 
 ## Планируемые метрики
 
@@ -18,7 +19,7 @@
 - Рентабельность, %.
 - Динамика показателей (график matplotlib).
 
-## Запуск
+## Инструкция по запуску
 
 ```bash
 python -m venv .venv
@@ -26,6 +27,22 @@ source .venv/bin/activate  # или .venv\Scripts\activate для Windows
 pip install -r requirements.txt
 python main.py
 ```
+
+## Структура проекта
+
+```text
+business-metrics-analyzer/
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── main.py
+└── docs/
+    └── business_requirements.md
+```
+
+## Документация
+
+- [Бизнес-требования](docs/business_requirements.md)
 
 ## Автор
 
