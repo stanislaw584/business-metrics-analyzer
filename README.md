@@ -37,12 +37,14 @@ business-metrics-analyzer/
 ├── requirements.txt
 ├── main.py
 └── docs/
-    └── business_requirements.md
+    ├── business_requirements.md
+    └── control_questions.md
 ```
 
 ## Документация
 
 - [Бизнес-требования](docs/business_requirements.md)
+- [Ответы на контрольные вопросы](docs/control_questions.md)
 
 ## Автор
 
