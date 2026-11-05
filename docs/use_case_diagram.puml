@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+skinparam defaultFontName "DejaVu Sans"
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #EEF4FB
+  BorderColor #2F5D8A
+}
+skinparam actorBorderColor #2F5D8A
+
+title Use Case-диаграмма: Business Metrics Analyzer
+
+actor "Пользователь" as U
+actor "Коммерческий директор" as CD
+actor "Руководитель отдела" as RO
+actor "Менеджер по продажам" as MP
+actor "Аналитик" as AN
+actor "Администратор" as AD
+
+U <|-- CD
+U <|-- RO
+U <|-- MP
+U <|-- AN
+U <|-- AD
+
+rectangle "Business Metrics Analyzer" {
+  usecase "Авторизация" as UC0
+  usecase "Просмотр дашборда KPI" as UC1
+  usecase "Сравнение с предыдущим\nпериодом" as UC7
+  usecase "Формирование отчёта" as UC2
+  usecase "Экспорт отчёта в Excel" as UC4
+  usecase "Расчёт KPI" as UCK
+  usecase "Загрузка данных о продажах" as UC3
+  usecase "Проверка формата файла" as UCV
+  usecase "Управление пользователями" as UC5
+  usecase "Настройка метрик\n(плановые значения)" as UC6
+  usecase "Уведомления о KPI" as UC8
+}
+
+U --> UC0
+
+CD --> UC1
+CD --> UC2
+CD --> UC4
+CD --> UC8
+RO --> UC1
+RO --> UC2
+MP --> UC1
+MP --> UC3
+AN --> UC1
+AN --> UC2
+AN --> UC3
+AN --> UC4
+AN --> UC6
+AD --> UC5
+
+UC1 ..> UCK : <<include>>
+UC2 ..> UCK : <<include>>
+UC3 ..> UCV : <<include>>
+UC7 .> UC1 : <<extend>>
+UC4 .> UC2 : <<extend>>
+@enduml
