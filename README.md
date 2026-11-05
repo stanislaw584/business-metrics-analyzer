@@ -38,14 +38,29 @@ business-metrics-analyzer/
 ├── main.py
 └── docs/
     ├── business_requirements.md
+    ├── user_stories.md
+    ├── use_cases.md
+    ├── use_case_diagram.puml
+    ├── use_case_diagram.png
+    ├── product_backlog.md
+    ├── value_complexity_matrix.png
     ├── control_questions.md
+    ├── control_questions_pz2.md
     └── screenshots/
 ```
 
 ## Документация
 
 - [Бизнес-требования](docs/business_requirements.md)
-- [Ответы на контрольные вопросы](docs/control_questions.md)
+- [Ответы на контрольные вопросы (ПЗ № 1)](docs/control_questions.md)
+
+### Практическое занятие № 2. Анализ требований и User Stories
+
+- [Бизнес-требования, интервью, AS-IS / TO-BE](docs/business_requirements.md)
+- [User Stories и критерии приёмки](docs/user_stories.md)
+- [Use Case-диаграмма и описание Use Cases](docs/use_cases.md)
+- [Product Backlog](docs/product_backlog.md)
+- [Ответы на контрольные вопросы (ПЗ № 2)](docs/control_questions_pz2.md)
 
 ## Результаты выполнения
 
