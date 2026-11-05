@@ -41,6 +41,7 @@ business-metrics-analyzer/
     ├── user_stories.md
     ├── use_cases.md
     ├── use_case_diagram.puml
+    ├── draw_use_case.py
     ├── use_case_diagram.png
     ├── product_backlog.md
     ├── value_complexity_matrix.png
