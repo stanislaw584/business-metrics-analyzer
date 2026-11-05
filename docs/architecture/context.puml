@@ -1,0 +1,30 @@
+@startuml context
+!include <C4/C4_Context>
+
+skinparam dpi 200
+skinparam defaultFontName "DejaVu Sans"
+LAYOUT_TOP_DOWN()
+HIDE_STEREOTYPE()
+
+title Диаграмма контекста (C4, уровень 1): Business Metrics Analyzer
+
+Person(director, "Коммерческий директор", "Смотрит KPI компании, получает уведомления")
+Person(head, "Руководитель отдела", "Контролирует KPI своего отдела")
+Person(manager, "Менеджер по продажам", "Загружает данные о продажах, видит личные KPI")
+Person(analyst, "Аналитик", "Формирует и экспортирует отчёты, настраивает метрики")
+Person(admin, "Администратор", "Управляет пользователями и ролями")
+
+System(bma, "Business Metrics Analyzer", "Веб-приложение: импорт продаж, расчёт KPI, дашборды, отчёты")
+
+System_Ext(source, "Источник данных о продажах", "1С, кассовая система, CRM: выгрузки CSV / Excel")
+System_Ext(email, "Сервис email-уведомлений", "SMTP-сервер компании")
+
+Rel(director, bma, "Смотрит дашборд и отчёты", "HTTPS")
+Rel(head, bma, "Смотрит KPI отдела", "HTTPS")
+Rel(manager, bma, "Загружает продажи", "HTTPS")
+Rel(analyst, bma, "Формирует отчёты", "HTTPS")
+Rel(admin, bma, "Администрирует", "HTTPS")
+
+Rel(bma, source, "Получает данные о продажах", "CSV / Excel / API")
+Rel(bma, email, "Отправляет уведомления", "SMTP")
+@enduml

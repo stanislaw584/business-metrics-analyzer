@@ -1,0 +1,45 @@
+@startuml containers
+!include <C4/C4_Container>
+
+skinparam dpi 200
+skinparam defaultFontName "DejaVu Sans"
+LAYOUT_TOP_DOWN()
+HIDE_STEREOTYPE()
+
+title Диаграмма контейнеров (C4, уровень 2): Business Metrics Analyzer
+
+Person(users, "Пользователи", "Директор, руководители отделов, менеджеры, аналитики, администратор")
+
+System_Ext(source, "Источник данных", "1С / CSV / Excel")
+
+System_Boundary(bma, "Business Metrics Analyzer") {
+  Container(web, "Web UI", "HTML / JS", "Дашборд, отчёты, загрузка файлов")
+  Container(api, "REST API", "Python, FastAPI", "Единая точка входа, маршрутизация запросов")
+  Container(importer, "Сервис импорта", "Python, pandas", "Разбор и проверка CSV / Excel, пакетная запись")
+  Container(auth, "Сервис аутентификации", "Python, JWT", "Вход, выпуск и проверка токенов, роли")
+  Container(kpi, "Сервис KPI", "Python", "Расчёт выручки, среднего чека, конверсии, рентабельности")
+  Container(reports, "Сервис отчётов", "Python, openpyxl", "Формирование и экспорт отчётов в Excel / PDF")
+  ContainerDb(db, "База данных", "PostgreSQL 16", "Продажи, пользователи, справочники, журнал аудита")
+  ContainerDb(cache, "Кэш", "Redis 7", "Предрасчитанные KPI для дашборда")
+  ContainerDb(storage, "Файловое хранилище", "MinIO (S3)", "Сформированные отчёты, исходные файлы")
+}
+
+System_Ext(email, "Сервис уведомлений", "SMTP")
+
+Rel(users, web, "Работает в браузере", "HTTPS")
+Rel(web, api, "Запросы", "REST / JSON")
+Rel(api, auth, "Проверка токена")
+Rel(api, importer, "Импорт")
+Rel(api, kpi, "Расчёт KPI")
+Rel(api, reports, "Отчёты")
+Rel(source, importer, "Передача данных", "файлы / API")
+Rel(importer, db, "Запись продаж", "SQL")
+Rel(auth, db, "Пользователи и роли", "SQL")
+Rel(kpi, db, "Чтение продаж", "SQL")
+Rel(kpi, cache, "Кэширование KPI")
+Rel(reports, kpi, "Данные KPI")
+Rel(reports, storage, "Сохранение файлов", "S3 API")
+Rel(reports, email, "Уведомления", "SMTP")
+Lay_R(importer, auth)
+Lay_L(importer, source)
+@enduml

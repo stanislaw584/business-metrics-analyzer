@@ -47,6 +47,17 @@ business-metrics-analyzer/
     ├── value_complexity_matrix.png
     ├── control_questions.md
     ├── control_questions_pz2.md
+    ├── control_questions_pz4.md
+    ├── architecture/
+    │   ├── README.md
+    │   ├── context.puml / context.png
+    │   ├── containers.puml / containers.png
+    │   ├── components.puml / components.png
+    │   ├── deployment.puml / deployment.png
+    │   ├── draw_components.py, draw_deployment.py
+    │   ├── patterns.md
+    │   └── adr/
+    │       └── ADR-001.md … ADR-005.md
     └── screenshots/
 ```
 
@@ -62,6 +73,13 @@ business-metrics-analyzer/
 - [Use Case-диаграмма и описание Use Cases](docs/use_cases.md)
 - [Product Backlog](docs/product_backlog.md)
 - [Ответы на контрольные вопросы (ПЗ № 2)](docs/control_questions_pz2.md)
+
+### Практическое занятие № 4. Архитектура
+
+- [Архитектура: обзор, драйверы, стиль, диаграммы C4, компоненты, развёртывание](docs/architecture/README.md)
+- [Паттерны проектирования](docs/architecture/patterns.md)
+- [Architecture Decision Records (ADR)](docs/architecture/adr/)
+- [Ответы на контрольные вопросы (ПЗ № 4)](docs/control_questions_pz4.md)
 
 ## Результаты выполнения
 
@@ -97,6 +115,6 @@ business-metrics-analyzer/
 
 ![Структура проекта](docs/screenshots/08-structure.png)
 
-## Автор
+## Авторы
 
-Студент группы Б1123-38.03.05ба, Удовенко Станислав Романович.
+Студенты группы Б1123-38.03.05ба: Удовенко Станислав Романович, Тирон Артём Игоревич.

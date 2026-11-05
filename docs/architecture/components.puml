@@ -1,0 +1,109 @@
+@startuml components
+' Текстовая версия диаграммы компонентов.
+' Иллюстрация components.png построена скриптом draw_components.py.
+skinparam dpi 200
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 13
+skinparam shadowing false
+skinparam componentStyle uml2
+skinparam ArrowColor #44546A
+skinparam package {
+  BorderColor #2F5D8A
+  BackgroundColor #F7FAFD
+  FontStyle bold
+}
+skinparam component {
+  BorderColor #2F5D8A
+  BackgroundColor #E3EEF9
+}
+skinparam interface {
+  BorderColor #C27A2C
+  BackgroundColor #FFF6EC
+}
+skinparam database {
+  BorderColor #2F5D8A
+  BackgroundColor #DCE8F5
+}
+skinparam cloud {
+  BorderColor #888888
+  BackgroundColor #EEEEEE
+}
+top to bottom direction
+
+title Диаграмма компонентов REST API (слоистая архитектура)
+
+package "Presentation (API)" {
+  [AuthController] as AC
+  [SalesController] as SC
+  [KpiController] as KC
+  [ReportsController] as RC
+}
+
+package "Application (Service Layer)" {
+  interface IAuthService as IAS
+  interface ISalesImportService as ISIS
+  interface IKpiService as IKS
+  interface IReportService as IRS
+  [AuthService] as AS
+  [UserService] as US
+  [SalesImportService] as SIS
+  [KpiService] as KS
+  [ReportService] as RS
+  AS -up- IAS
+  SIS -up- ISIS
+  KS -up- IKS
+  RS -up- IRS
+}
+
+package "Domain" {
+  [Sale, User, Kpi, Report] as MODELS
+  [KpiStrategy] as STR
+  [Validators] as VAL
+  interface "SaleRepository" as ISR
+  interface "UserRepository" as IUR
+}
+
+package "Infrastructure" {
+  [SqlSaleRepository] as SSR
+  [SqlUserRepository] as SUR
+  [UnitOfWork] as UOW
+  [JwtProvider] as JWT
+  [ExcelReportGenerator] as XLS
+  [EmailNotifier] as MAIL
+  [RedisKpiCache] as RKC
+}
+
+SSR ..|> ISR
+SUR ..|> IUR
+
+database "PostgreSQL" as DB
+database "Redis" as REDIS
+cloud "SMTP / MinIO" as EXT
+
+AC ..> IAS
+SC ..> ISIS
+KC ..> IKS
+RC ..> IRS
+
+AS --> US
+AS --> JWT
+US ..> IUR
+SIS --> VAL
+SIS --> UOW
+SIS ..> ISR
+KS --> STR
+KS ..> ISR
+KS --> RKC
+RS ..> IKS
+RS --> XLS
+RS --> MAIL
+
+UOW --> SSR
+UOW --> SUR
+SSR --> MODELS
+SSR --> DB
+SUR --> DB
+RKC --> REDIS
+XLS --> EXT
+MAIL --> EXT
+@enduml

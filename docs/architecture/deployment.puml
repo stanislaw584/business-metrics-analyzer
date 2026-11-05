@@ -1,0 +1,39 @@
+@startuml deployment
+' Текстовая версия диаграммы развёртывания.
+' Иллюстрация deployment.png построена скриптом draw_deployment.py.
+skinparam defaultFontName "DejaVu Sans"
+left to right direction
+
+title Диаграмма развёртывания Business Metrics Analyzer
+
+node "Клиентское устройство" {
+  artifact "Браузер (Web UI)" as BROWSER
+}
+
+node "Облачный сервер (Linux VM, Docker Engine)" {
+  node "Nginx\nnginx:alpine" <<container>> as NGINX
+  node "Приложение\nbma-api:latest" <<container>> {
+    artifact "FastAPI / Uvicorn" as API
+    artifact "Сервис аутентификации" as AUTH
+    artifact "Сервис импорта" as IMPORT
+    artifact "Сервис KPI" as KPI
+    artifact "Сервис отчётов" as REPORTS
+  }
+  database "PostgreSQL\npostgres:16" <<container>> as DB
+  database "Redis\nredis:7-alpine" <<container>> as CACHE
+  storage "MinIO\nminio/minio" <<container>> as STORAGE
+}
+
+cloud "Внешние сервисы" {
+  node "SMTP-сервер" <<external>> as SMTP
+  node "Источник данных 1С / CSV" <<external>> as SOURCE
+}
+
+BROWSER --> NGINX : HTTPS :443
+NGINX --> API : HTTP :8000
+API --> DB : SQL :5432
+API --> CACHE : Redis :6379
+REPORTS --> STORAGE : S3 API :9000
+REPORTS --> SMTP : SMTP :587
+SOURCE --> IMPORT : HTTPS / SFTP
+@enduml
