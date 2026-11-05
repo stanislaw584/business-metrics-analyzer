@@ -80,7 +80,7 @@ Business Metrics Analyzer – веб-приложение для ООО «Рит
 | SaleRepository | SaleRepository | `add_many(records) -> None`, `get_by_period(start, end, department=None) -> list[SaleRecord]` |
 | UnitOfWork | контекстный менеджер | `__enter__() -> UnitOfWork`, `__exit__(...)`: `commit` или `rollback` |
 
-### 4.4 Развёртывание
+### 4.4 Развёртывание.
 
 ![Диаграмма развёртывания](deployment.png)
 
