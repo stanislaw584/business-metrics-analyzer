@@ -9,7 +9,7 @@
 ## Используемые технологии
 
 - Python 3.12+
-- pandas
+- pandas...
 - matplotlib
 - Git и GitHub (ветки, Pull Request)
 
