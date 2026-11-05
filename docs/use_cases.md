@@ -2,7 +2,7 @@
 
 ## Use Case-диаграмма
 
-Исходный код диаграммы: [use_case_diagram.puml](use_case_diagram.puml) (PlantUML).
+Диаграмма построена скриптом [draw_use_case.py](draw_use_case.py) (matplotlib, запуск: `python docs/draw_use_case.py`). Текстовое описание той же диаграммы в нотации PlantUML: [use_case_diagram.puml](use_case_diagram.puml).
 
 ![Use Case-диаграмма](use_case_diagram.png)
 

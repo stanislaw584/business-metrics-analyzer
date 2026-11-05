@@ -1,63 +1,74 @@
 @startuml
 left to right direction
+skinparam dpi 220
 skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 13
 skinparam shadowing false
-skinparam packageStyle rectangle
+skinparam roundCorner 12
+skinparam ArrowColor #44546A
+skinparam ArrowThickness 1.2
+skinparam actor {
+  BorderColor #2F5D8A
+  BackgroundColor #DCE8F5
+  FontStyle bold
+}
 skinparam usecase {
   BackgroundColor #EEF4FB
   BorderColor #2F5D8A
+  BorderThickness 1.3
 }
-skinparam actorBorderColor #2F5D8A
+skinparam rectangle {
+  BorderColor #2F5D8A
+  BorderThickness 1.5
+  BackgroundColor #FBFCFE
+  FontStyle bold
+  FontSize 15
+}
 
-title Use Case-диаграмма: Business Metrics Analyzer
+title Use Case-диаграмма системы Business Metrics Analyzer
 
-actor "Пользователь" as U
-actor "Коммерческий директор" as CD
-actor "Руководитель отдела" as RO
-actor "Менеджер по продажам" as MP
+actor "Коммерческий\nдиректор" as CD
+actor "Руководитель\nотдела" as RO
+actor "Менеджер\nпо продажам" as MP
+
+rectangle "Business Metrics Analyzer" {
+  usecase "Уведомления о KPI" as UC8
+  usecase "Просмотр дашборда KPI" as UC1
+  usecase "Сравнение с предыдущим\nпериодом" as UC7
+  usecase "Расчёт KPI" as UCK
+  usecase "Формирование отчёта" as UC2
+  usecase "Экспорт отчёта в Excel" as UC4
+  usecase "Загрузка данных о продажах" as UC3
+  usecase "Проверка формата файла" as UCV
+  usecase "Настройка метрик\n(плановые значения)" as UC6
+  usecase "Управление пользователями" as UC5
+  usecase "Авторизация" as UC0
+}
+
 actor "Аналитик" as AN
 actor "Администратор" as AD
 
-U <|-- CD
-U <|-- RO
-U <|-- MP
-U <|-- AN
-U <|-- AD
-
-rectangle "Business Metrics Analyzer" {
-  usecase "Авторизация" as UC0
-  usecase "Просмотр дашборда KPI" as UC1
-  usecase "Сравнение с предыдущим\nпериодом" as UC7
-  usecase "Формирование отчёта" as UC2
-  usecase "Экспорт отчёта в Excel" as UC4
-  usecase "Расчёт KPI" as UCK
-  usecase "Загрузка данных о продажах" as UC3
-  usecase "Проверка формата файла" as UCV
-  usecase "Управление пользователями" as UC5
-  usecase "Настройка метрик\n(плановые значения)" as UC6
-  usecase "Уведомления о KPI" as UC8
-}
-
-U --> UC0
-
+CD --> UC8
 CD --> UC1
 CD --> UC2
-CD --> UC4
-CD --> UC8
 RO --> UC1
 RO --> UC2
 MP --> UC1
 MP --> UC3
-AN --> UC1
-AN --> UC2
-AN --> UC3
-AN --> UC4
-AN --> UC6
-AD --> UC5
+
+UC1 <-- AN
+UC2 <-- AN
+UC4 <-- AN
+UC3 <-- AN
+UC6 <-- AN
+UC5 <-- AD
 
 UC1 ..> UCK : <<include>>
 UC2 ..> UCK : <<include>>
 UC3 ..> UCV : <<include>>
-UC7 .> UC1 : <<extend>>
-UC4 .> UC2 : <<extend>>
+UC7 ..> UC1 : <<extend>>
+UC4 ..> UC2 : <<extend>>
+
+note "Авторизация обязательна\nдля всех акторов" as N0
+N0 .. UC0
 @enduml
