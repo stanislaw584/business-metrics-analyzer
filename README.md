@@ -11,6 +11,8 @@
 - Python 3.12+
 - pandas...
 - matplotlib
+- SQLAlchemy 2.0, Alembic (миграции), SQLite / PostgreSQL
+- Faker (тестовые данные), pytest
 - Git и GitHub (ветки, Pull Request)
 
 ## Планируемые метрики
@@ -28,14 +30,57 @@ pip install -r requirements.txt
 python main.py
 ```
 
+### База данных (ПЗ № 5)
+
+```bash
+cp .env.example .env              # Windows: copy .env.example .env
+alembic upgrade head              # создать схему БД (SQLite по умолчанию)
+python scripts/seed_data.py       # наполнить тестовыми данными (Faker, seed=42)
+python -m pytest tests/ -v        # тесты запросов, моделей и наполнения
+```
+
+| Действие | Команда |
+|---|---|
+| Проверка подключения | `python scripts/check_connection.py` |
+| Новая миграция | `alembic revision --autogenerate -m "описание"` |
+| Откат на одну ревизию | `alembic downgrade -1` |
+| История миграций | `alembic history` |
+| Очистить таблицы перед повторным наполнением | `python scripts/reset_db.py` |
+
+Для PostgreSQL достаточно установить `psycopg2-binary` и указать `DATABASE_URL` в `.env`.
+
 ## Структура проекта
 
 ```text
 business-metrics-analyzer/
+├── .env.example
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
 ├── main.py
+├── alembic.ini
+├── pytest.ini
+├── migrations/
+│   ├── env.py
+│   └── versions/
+│       ├── 0001_create_initial_tables.py
+│       └── 0002_add_product_description.py
+├── src/
+│   ├── database.py
+│   ├── queries.py
+│   └── models/
+│       ├── __init__.py
+│       ├── user.py, product.py, sale.py
+│       └── kpi.py, report.py, metric_setting.py
+├── scripts/
+│   ├── check_connection.py
+│   ├── seed_data.py
+│   └── reset_db.py
+├── tests/
+│   ├── conftest.py
+│   ├── test_queries.py
+│   ├── test_models.py
+│   └── test_seed.py
 └── docs/
     ├── business_requirements.md
     ├── user_stories.md
@@ -48,6 +93,10 @@ business-metrics-analyzer/
     ├── control_questions.md
     ├── control_questions_pz2.md
     ├── control_questions_pz4.md
+    ├── control_questions_pz5.md
+    ├── database/
+    │   ├── er_diagram.png / er_diagram.puml
+    │   └── schema.md
     ├── architecture/
     │   ├── README.md
     │   ├── context.puml / context.png
@@ -80,6 +129,14 @@ business-metrics-analyzer/
 - [Паттерны проектирования](docs/architecture/patterns.md)
 - [Architecture Decision Records (ADR)](docs/architecture/adr/)
 - [Ответы на контрольные вопросы (ПЗ № 4)](docs/control_questions_pz4.md)
+
+### Практическое занятие № 5. Проектирование и создание базы данных
+
+- [Схема БД: таблицы, связи, индексы, нормализация, миграции](docs/database/schema.md)
+- [ER-диаграмма](docs/database/er_diagram.png)
+- Подключение: [src/database.py](src/database.py), модели: [src/models/](src/models/), миграции: [migrations/versions/](migrations/versions/)
+- Запросы: [src/queries.py](src/queries.py), тестовые данные: [scripts/seed_data.py](scripts/seed_data.py), тесты: [tests/](tests/)
+- [Ответы на контрольные вопросы (ПЗ № 5)](docs/control_questions_pz5.md)
 
 ## Результаты выполнения
 

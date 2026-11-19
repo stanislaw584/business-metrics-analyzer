@@ -1,0 +1,1 @@
+Миграции Alembic. Команды: alembic upgrade head / downgrade -1 / history.
